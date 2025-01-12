@@ -1,0 +1,12 @@
+jtype: Flow
+with:
+    port: 12345
+executors:
+  - uses: StableLM
+    timeout_ready: -1
+    py_modules:
+      - executor.py
+  - uses: TextToImage
+    timeout_ready: -1
+    py_modules:
+      - text_to_image.py
