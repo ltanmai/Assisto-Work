@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Demo</title>
+</head>
+<body>
+
+<div style="max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px;">
+    <div id="chat-container" style="height: 300px; overflow-y: scroll; border: 1px solid #ddd; padding: 10px;"></div>
+    <form id="chat-form">
+        <input type="text" id="user-input" placeholder="Type your message..." style="width: 80%; padding: 5px;">
+        <button type="button" onclick="sendMessage()">Send</button>
+    </form>
+</div>
+
+<script>
+    function appendMessage(sender, message) {
+        const chatContainer = document.getElementById('chat-container');
+        const newMessage = document.createElement('p');
+        newMessage.innerHTML = `<strong>${sender}:</strong> ${message}`;
+        chatContainer.appendChild(newMessage);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+    
+    function sendMessage() {
+        const userMessage = document.getElementById('user-input').value;
+        appendMessage('User', userMessage);
+    
+        // Check if the input is in JSON format
+        let jsonInput;
+        try {
+            jsonInput = JSON.parse(userMessage);
+        } catch (error) {
+            // Not a valid JSON input, proceed with the original user input
+            jsonInput = { message: userMessage };
+        }
+    
+        // Make a POST request to the Flask server
+        fetch('http://localhost:12345/predictions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(jsonInput),
+        })
+        .then(response => response.json())
+        .then(data => {
+            const dates = data.dates.join(', ');
+            const prediction = data.prediction.join(', ');
+            appendMessage('Chatbot', `Predicted dates: ${dates}, Predictions: ${prediction}`);
+        })
+        .catch(error => console.error('Error:', error));
+    
+        // Clear the input field
+        document.getElementById('user-input').value = '';
+    }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,3 @@
+messages = data['data'][0]['messages']['data']
+
+formatted_messages = [message['message'] for message in messages]
