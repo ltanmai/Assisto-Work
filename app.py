@@ -5,7 +5,7 @@ import logging
 app = Flask(__name__)
 
 VERIFY_TOKEN = "hello"
-ACCESS_TOKEN = "EAAFVJxB4ILQBOwyUlUsdcdGBriLYAxW3YVAWVp4bo8cQ4wiDJxMXhJl1WtrI0vMcCijO9Pt4HfXsaq8xx191bYr8UfsqmTXfIdbxaKHx5ZCsbM5KKKyjkpkyhkUE50s7odltEavS2YPA3B358rUZCFX4ZCCBJQnIluGxZAUcYEt2JLYyttAac61jcaFRPZAFcq7z53dZC3"
+ACCESS_TOKEN = ""
 
 FB_API_URL = "https://graph.facebook.com/v12.0/me/messages"
 
